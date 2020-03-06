@@ -50,6 +50,20 @@ def display_board(board):
             else:
                 return True
 
+    def player_choice(board):
+        choice = int(input("Please choose a position between 1-9:> "))
+        if choice in range(1, 10) and is_position_taken(board, choice) == 0:
+            return choice
+        else:
+            while choice not in range(1, 10) or is_position_taken(board, choice) == 1:
+                if choice not in range(1, 10):
+                    choice = int(
+                        input("Number has to be between 1-9:> "))
+                elif is_position_taken(board, choice) == 1:
+                    choice = int(
+                        input("This number is already taken:> "))
+            return choice
+
 
     grid = [f'     |     |     \n  {board[1]}  |  {board[2]}  |  {board[3]}  \n     |     |     \n_________________\n     |     |     \n  {board[4]}  |  {board[5]}  |  {board[6]}  \n     |     |     \n_________________\n     |     |     \n  {board[7]}  |  {board[8]}  |  {board[9]}  \n     |     |     \n']
     print(grid[0])
