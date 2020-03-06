@@ -41,6 +41,14 @@ def display_board(board):
             return 1
         else:
             return 0
+    
+
+    def full_board_check(board):
+        for i in range(1, len(board)):
+            if board[i] != "X" and board[i] != "O":
+                return False
+            else:
+                return True
 
 
     grid = [f'     |     |     \n  {board[1]}  |  {board[2]}  |  {board[3]}  \n     |     |     \n_________________\n     |     |     \n  {board[4]}  |  {board[5]}  |  {board[6]}  \n     |     |     \n_________________\n     |     |     \n  {board[7]}  |  {board[8]}  |  {board[9]}  \n     |     |     \n']
