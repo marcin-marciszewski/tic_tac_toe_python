@@ -27,6 +27,13 @@ def display_board(board):
             else:
                 return False
 
+    
+    def who_first():
+        player = random.randint(1, 2)
+        return player
+
+    first_player = who_first()
+
 
     grid = [f'     |     |     \n  {board[1]}  |  {board[2]}  |  {board[3]}  \n     |     |     \n_________________\n     |     |     \n  {board[4]}  |  {board[5]}  |  {board[6]}  \n     |     |     \n_________________\n     |     |     \n  {board[7]}  |  {board[8]}  |  {board[9]}  \n     |     |     \n']
     print(grid[0])
