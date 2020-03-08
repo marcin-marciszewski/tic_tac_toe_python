@@ -1,13 +1,9 @@
 import random
 game_board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
 # game_board = ["b", "", "O", "X", "O", "X", "O", "O", "X", "X"]
-grid = [f'     |     |     \n  {game_board[1]}  |  {game_board[2]}  |  {game_board[3]}  \n     |     |     \n_________________\n     |     |     \n  {game_board[4]}  |  {game_board[5]}  |  {game_board[6]}  \n     |     |     \n_________________\n     |     |     \n  {game_board[7]}  |  {game_board[8]}  |  {game_board[9]}  \n     |     |     \n']
 
 
 def display_board(board):
-    current_player = 0
-    end_game = False
-
     print("Welcome to Tic Tac Toe!")
 
     def player_input():
@@ -26,23 +22,31 @@ def display_board(board):
     else:
         player2 = "X"
 
+    players = [player1, player2]
+    current_player = random.choice(players)
+
+    def player_name(player):
+        if current_player == player1:
+            return "Player 1"
+        else:
+            return "Player 2"
+
     def place_marker(board, marker, position):
         board[position] = marker
 
     def win_check(board, mark):
         for i in range(1, len(board)):
             if (i == 1 or i == 4 or i == 7) and (board[i] == mark and board[i+1] == mark and board[i+2] == mark):
+                print(f'{mark} wins')
                 return True
             elif (i == 1 or i == 2 or i == 3) and (board[i] == mark and board[i+3] == mark and board[i+6] == mark):
+                print(f'{mark} wins')
                 return True
             elif (board[1] == mark and board[5] == mark and board[9] == mark) or (board[3] == mark and board[5] == mark and board[7] == mark):
+                print(f'{mark} wins')
                 return True
             else:
                 return False
-
-    def who_first():
-        player = random.randint(1, 2)
-        return player
 
     def is_position_taken(board, position):
         if position in range(1, 10) and (board[position] == 'X' or board[position] == 'O'):
@@ -52,7 +56,7 @@ def display_board(board):
 
     def full_board_check(board):
         for i in range(1, len(board)):
-            if board[i] != "X" and board[i] != "O":
+            if board[i] != "X" or board[i] != "O":
                 return False
             else:
                 return True
@@ -74,47 +78,20 @@ def display_board(board):
     start_game = input("Are you ready to start the game? Yes or No:> ")
 
     if start_game.lower() == 'yes':
-        print(f'Player {who_first()} starts')
-
-        # if who_first() == 1:
-        #     current_player = 1
-        #     place_marker(game_board, player1, player_choice(game_board))
-        #     print(game_board)
-        #     current_player = player2
-        #     print(current_player)
-        # else:
-        #     current_player = 2
-        #     place_marker(game_board, player2, player_choice(game_board))
-        #     print(game_board)
-        #     current_player = player1
-        #     print(current_player)
-
-        while not full_board_check(game_board):
-            place_marker(game_board, current_player, player_choice(game_board))
-            print(f'     |     |     \n  {game_board[1]}  |  {game_board[2]}  |  {game_board[3]}  \n     |     |     \n_________________\n     |     |     \n  {game_board[4]}  |  {game_board[5]}  |  {game_board[6]}  \n     |     |     \n_________________\n     |     |     \n  {game_board[7]}  |  {game_board[8]}  |  {game_board[9]}  \n     |     |     \n')
-
-            if current_player == player1:
+        print(f'{player_name(current_player)} starts')
+        while not full_board_check(board):
+            place_marker(board, current_player, player_choice(board))
+            print(f'     |     |     \n  {board[1]}  |  {board[2]}  |  {board[3]}  \n     |     |     \n_________________\n     |     |     \n  {board[4]}  |  {board[5]}  |  {board[6]}  \n     |     |     \n_________________\n     |     |     \n  {board[7]}  |  {board[8]}  |  {board[9]}  \n     |     |     \n')
+            if win_check(board, current_player) != False:
+                break
+            elif current_player == player1:
                 current_player = player2
             else:
                 current_player = player1
-
-        # if who_first() == 1:
-        #     while not full_board_check(game_board):
-        #         if full_board_check(game_board):
-        #             print('end')
-        #         else:
-        #             place_marker(game_board, player1, player_choice(game_board))
-        #             print(game_board)
-        # else:
-        #     while not full_board_check(game_board):
-        #         if full_board_check(game_board):
-        #             print('end')
-        #         else:
-        #             place_marker(game_board, player2, player_choice(game_board))
-        #             print(game_board)
-
+    elif start_game.lower() == 'no':
+        print('Good bye')
     else:
-        print("Good Bye")
+        start_game = input("Yes or No. Please:> ")
 
 
 display_board(game_board)
