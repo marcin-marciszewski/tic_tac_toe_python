@@ -2,7 +2,7 @@ import random
 
 
 def display_board():
-    board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+    moves = 0
     print("Welcome to Tic Tac Toe!")
 
     def player_input():
@@ -46,12 +46,11 @@ def display_board():
         else:
             return 0
 
-    def full_board_check(board):
-        for i in range(1, len(board)):
-            if board[i] != "X" or board[i] != "O":
-                return False
-            else:
-                return True
+    def full_board_check(moves):
+        if moves == 9:
+            return True
+        else:
+            return False
 
     def player_choice(board):
         choice = int(input("Please choose a position between 1-9:> "))
@@ -67,20 +66,24 @@ def display_board():
                         input("This number is already taken:> "))
             return choice
 
-    def play_game(current_player):
+    def play_game(current_player, moves):
         board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
         start_game = "x"
         while start_game.lower() != "yes" or start_game.lower() != "no":
             start_game = input("Are you ready to start the game? Yes or No:> ")
             if start_game.lower() == "yes" or start_game.lower() == "no":
                 break
+
         if start_game.lower() == 'yes':
             print(f'{player_name(current_player)} starts')
-            while not full_board_check(board):
+            while not full_board_check(moves):
                 place_marker(board, current_player, player_choice(board))
+                moves += 1
                 print(f'     |     |     \n  {board[1]}  |  {board[2]}  |  {board[3]}  \n     |     |     \n_________________\n     |     |     \n  {board[4]}  |  {board[5]}  |  {board[6]}  \n     |     |     \n_________________\n     |     |     \n  {board[7]}  |  {board[8]}  |  {board[9]}  \n     |     |     \n')
-
                 if win_check(board, current_player) != False:
+                    repeat()
+                elif full_board_check(moves) and win_check(board, current_player) == False:
+                    print("No winner")
                     repeat()
                 elif current_player == player1:
                     current_player = player2
@@ -89,16 +92,21 @@ def display_board():
 
         elif start_game.lower() == 'no':
             print('Good bye')
+            exit()
 
     def repeat():
-        answer = input('Do you want to play again. Yes or No:> ')
+        answer = "x"
+        while answer.lower() != "yes" or answer.lower() != "no":
+            answer = input("Do you want to play again? Yes or No:> ")
+            if answer.lower() == "yes" or answer.lower() == "no":
+                break
         if answer.lower() == "yes":
 
-            play_game(current_player)
+            play_game(current_player, moves)
         else:
             print("Good bye.")
-
-    play_game(current_player)
+            exit()
+    play_game(current_player, moves)
 
 
 display_board()
